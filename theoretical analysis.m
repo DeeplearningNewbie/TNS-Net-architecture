@@ -44,6 +44,8 @@ rssi1 = rx_h_est_vec(:,:,1);
 for i = 2:12
     rssi1 = rssi1 + rx_h_est_vec(:,:,i);
 end
+
+% channel dataset
 rssi1 = abs(rssi1);
 H1=rssi1(1:3:end,:);
 h1=reshape(H1', 1, []);
