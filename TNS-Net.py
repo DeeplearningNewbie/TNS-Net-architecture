@@ -22,13 +22,13 @@ import random
 
 
 # sigma_data = sio.loadmat('Data_sigmaC.mat')
-p_data = sio.loadmat(r'C:\Users\YangXL\OneDrive\MrYang\Paper\Deep-unfolding\Figure\NUMperformance\Data_240702_RBvector.mat')
-t_max = sio.loadmat(r'C:\Users\YangXL\OneDrive\MrYang\Paper\Deep-unfolding\Figure\NUMperformance\Data_240702_Tmax.mat')
+p_data = sio.loadmat(r'Data_240702_RBvector.mat')
+t_max = sio.loadmat(r'Data_240702_Tmax.mat')
 # sigma_tensor = torch.tensor(sigma_data['Sigma'])
 p0_tensor = torch.tensor(p_data['P_RB'])
 t0_tensor = torch.tensor(t_max['T_max'])
-p_tensor = p0_tensor[0:500]
-t_tensor = t0_tensor[0:500]
+p_tensor = p0_tensor[0:1000]
+t_tensor = t0_tensor[0:1000]
 Num = p_tensor.size()[0]
 # index = torch.randperm(Num)
 train_ratio = 0.7
@@ -43,19 +43,19 @@ test_loader = DataLoader(dataset=test_data, batch_size=Num - Num_batch, drop_las
 
 
 # train_data = TensorDataset(t_tensor, p_tensor)
-epsilon = torch.tensor([0.01, 0.01, 0.01], dtype=torch.float32)
+epsilon = torch.tensor([0.01], dtype=torch.float32)
 alpha = torch.tensor([0.05], dtype=torch.float32)
 factor = torch.tensor([0.9], dtype=torch.float32)
 len_alpha = torch.tensor([0.1], dtype=torch.float32)
 len_beta = torch.tensor([0.5], dtype=torch.float32)
-Lamda = torch.tensor([2.5 * 10 ** 3, 3 * 10 ** 3, 3.5 * 10 ** 3], dtype=torch.float32)  # arriving rate
+Lamda = torch.linspace(1e3, 5e3, 50, dtype=torch.float32) # arriving rate
 UE = 50  # UE number
 mec = torch.tensor([10 ** 4], dtype=torch.float32)  # MEC computing capacity
 eps = torch.tensor([10 ** (-8)], dtype=torch.float32)
 # 网络层数
 M = 10  # long scale
 K = 10 # short scale
-N = torch.tensor([5], dtype=torch.float32)  # RB number
+N = torch.tensor([100], dtype=torch.float32)  # RB number
 # Num_batch = Num # batch-size
 tau = torch.tensor([0.1 * 10 ** (-3)], dtype=torch.float32)  # time slot
 threshold = torch.tensor([0.3], dtype=torch.float32)
@@ -154,7 +154,7 @@ class my_Net(nn.Module):
             # print('p', p)
             # value_s1 = f1(p_old, False_mu, Lamda)
             # value_s2 = f2(p_old, False_mu, Lamda)
-            torch.set_printoptions(precision=16)
+            # torch.set_printoptions(precision=16)
             z1 = f(p_old, False_mu, mec * (1-sigma), Lamda, x)
             label = z1 < 1 - epsilon
             # print((label==True).any().item())
