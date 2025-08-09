@@ -20,6 +20,9 @@ from math import e
 import matplotlib.pyplot as plt
 import random
 
+torch.manual_seed(0)
+np.random.seed(0)
+random.seed(0)
 
 # sigma_data = sio.loadmat('Data_sigmaC.mat')
 p_data = sio.loadmat(r'Data_240702_RBvector.mat')
