@@ -1,8 +1,3 @@
-# This is a sample Python script.
-
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
 import torch
 import numpy as np
 import sympy as sp
@@ -25,8 +20,8 @@ np.random.seed(0)
 random.seed(0)
 
 # sigma_data = sio.loadmat('Data_sigmaC.mat')
-p_data = sio.loadmat(r'Data_240702_RBvector.mat')
-t_max = sio.loadmat(r'Data_240702_Tmax.mat')
+p_data = sio.loadmat(r'RBvector.mat')
+t_max = sio.loadmat(r'Tmax.mat')
 # sigma_tensor = torch.tensor(sigma_data['Sigma'])
 p0_tensor = torch.tensor(p_data['P_RB'])
 t0_tensor = torch.tensor(t_max['T_max'])
